@@ -1,0 +1,72 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}<a href="{% url 'home' %}">Открыть сайт</a>{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>{{ get_info }} {{ address }} {{ result }}</p>
+    <form action="{% url 'dadata' %}" method="post">
+        {% csrf_token %}
+        <input id="address" name="address" type="text"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@21.12.0/dist/css/suggestions.min.css" rel="stylesheet"/>
+        <script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@21.12.0/dist/js/jquery.suggestions.min.js"></script>
+
+
+        <script>
+        $("#address").suggestions({
+            minChars: 3,
+            token: "2c7dcf1739bbfa46c8d8c8de0da76486bd6e0b1d",
+            type: "ADDRESS",
+            /* Вызывается, когда пользователь выбирает одну из подсказок */
+            onSelect: function(suggestion) {
+                console.log(suggestion);
+            }
+        });
+
+
+        </script>
+        <button>Получить информацию</button>
+    </form>
+    <br>
+    <p>Регион: {{ region }}</p>
+    <p>Индекс: {{postal_code}}</p>
+    <p>Город: {{city}}</p>
+    <p>Улица: {{street_with_type}}</p>
+    <p>Дом: {{house}}</p>
+    <p>Географические координаты</p>
+    <ul>
+        <li>Широта: {{geo_lat}}</li>
+        <li>Долгота: {{geo_lon}}</li>
+    </ul>
+    <p>ФИАС-код (если есть)</p>
+    <ul>
+        <li>города: {{ city_fias_id }}</li>
+        <li>улицы: {{ street_fias_id }}</li>
+        <li>дома: {{ house_fias_id }}</li>
+        <li>квартиры: {{ flat_fias_id }}</li>
+    </ul>
+    <p>Кадастровый номер</p>
+    <ul>
+        <li>дома: {{ house_cadnum }}</li>
+        <li>квартиры: {{ flat_cadnum }}</li>
+    </ul>
+    <p>КЛАДР-код адреса: {{ kladr_id }}</p>
+    <p>Код ОКАТО: {{ okato }}</p>
+    <p>Код ОКТМО: {{ oktmo }}</p>
+    <p>Код ИФНС для физических лиц: {{ tax_office }}</p>
+    <p>Код ИФНС для организаций: {{ tax_office_legal }}</p>
+</body>
+</html>
+{% endblock %}
