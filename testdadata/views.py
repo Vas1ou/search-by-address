@@ -21,7 +21,7 @@ def index(request):
         context = {
             'postal_code': result['postal_code'] or '',
             'region': result['region'] or '',
-            'city': result['city'] or result['region'],
+            'city': result['city'] or result['region'] or '',
             'street_with_type': result['street_with_type'] or '',
             'house': result['house'] or '',
             'geo_lat': result['geo_lat'] or '',
