@@ -14,8 +14,8 @@ def index(request):
     #     return redirect('admin/')
     if request.method == 'POST' and request.POST['address']:
         address = request.POST['address']
-        token = "2c7dcf1739bbfa46c8d8c8de0da76486bd6e0b1d"
-        secret = "81c9b7fb84ea14e8c766f97c15f3ba0e0e77edbb"
+        token = "2ab84f15eba521cc63cf605cfc04c03ce22139bd"
+        secret = "48197a7131162e9a1006457d11fb97e222efae51"
         dadata = Dadata(token, secret)
         result = dadata.clean("address", address)
         context = {
